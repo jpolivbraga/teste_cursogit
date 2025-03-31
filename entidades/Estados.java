@@ -22,6 +22,11 @@ public class Estados {
         this.uf = uf;
     }
 
+    @Override
+    public String toString() {
+        return "Estados [id=" + id + ", estado=" + estado + ", uf=" + uf + "]";
+    }
+
 
     public int getId() {
         return id;

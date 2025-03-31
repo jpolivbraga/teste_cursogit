@@ -1,7 +1,9 @@
 package dao;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import entidades.Estados;
@@ -17,8 +19,26 @@ public class EstadoDao implements iEstados {
 
     @Override
     public List<Estados> consultar() {
-        return null;
+
+
+        List<Estados> estados = new ArrayList<Estados>();
+        try{
+            PreparedStatement ps = conexaodb.getConexao().prepareStatement("SELECT * FROM estados");
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                Estados estado = new Estados();
+                estado.setId(rs.getInt("id"));
+                estado.setEstado(rs.getString("estado"));
+                estado.setUf(rs.getString("uf"));
+                estados.add(estado);
+            }
+        } catch
+            (SQLException e) {
+            System.out.println("Erro: " + e.toString());
+        }
+        return estados;
     }
+    
 
     @Override
     public Estados consultarPorId(int id) {
@@ -44,9 +64,17 @@ public class EstadoDao implements iEstados {
         catch (SQLException e1) {
             System.out.println("Erro: " + e1.toString());
         return false;
+
+        }
+    }
     }
 
-}
+    
 
-}
+
+
+
+
+
+
 
