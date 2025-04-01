@@ -42,6 +42,22 @@ public class EstadoDao implements iEstados {
 
     @Override
     public Estados consultarPorId(int id) {
+        Estados estado = new Estados();
+        try {
+            PreparedStatement ps = conexaodb.getConexao().prepareStatement("SELECT * FROM estados WHERE id = ?");
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                estado.setId(rs.getInt("id"));
+                estado.setEstado(rs.getString("estado"));
+                estado.setUf(rs.getString("uf"));
+                return estado;
+            }
+                    
+        } catch (SQLException e) {
+            System.out.println("Erro: " + e.toString());
+        }
+
         return null;
     }
 
