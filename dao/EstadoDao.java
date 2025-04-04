@@ -13,7 +13,19 @@ import utils.conexaodb;
 public class EstadoDao implements iEstados {
 
     @Override
-    public boolean atualizar(Estados e) {
+    public boolean atualizar(Estados estado) {
+        String sql = "UPDATE estados SET estado = ?, uf = ? WHERE id = ?";
+        try {
+            PreparedStatement ps = conexaodb.getConexao().
+            prepareStatement(sql);
+            ps.setString(1, estado.getEstado());
+            ps.setString(2, estado.getUf());
+            ps.setInt(3, estado.getId());
+            ps.execute();
+            return true;
+        } catch (SQLException e) {
+            System.out.println("Erro: " + e.toString());
+        }
         return false;
     }
 
